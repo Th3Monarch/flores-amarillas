@@ -1,0 +1,438 @@
+/* ============================================================
+   SECCIONES — escenarios específicos de cada pantalla
+   ============================================================ */
+
+/* ---------- 1 · la semilla ---------- */
+#screen-seed {
+    background:
+        radial-gradient(120% 80% at 50% 42%, #173122 0%, #0e1f15 55%, #070d09 100%);
+}
+#screen-seed::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 45% at 50% 40%, rgba(255, 224, 138, 0.08), transparent 70%);
+    pointer-events: none;
+}
+
+.seed-stage {
+    position: relative;
+    z-index: 2;
+    width: min(320px, 78vw);
+    height: clamp(220px, 44vh, 300px);
+    margin: calc(max(10px, env(safe-area-inset-top)) + 2vh) auto 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.seed-copy {
+    position: relative;
+    z-index: 3;
+    margin-top: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 1.5rem calc(56px + env(safe-area-inset-bottom));
+}
+.seed-copy .line {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 4.4vw, 1.4rem);
+    color: var(--cream);
+    min-height: 1.6em;
+    opacity: 0;
+    transition: opacity 0.7s var(--ease);
+}
+.seed-copy .line.show { opacity: 1; }
+.seed-copy .line span { display: inline-block; }
+.seed-copy .btn {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.seed-copy .btn.show { opacity: 1; transform: none; }
+
+/* la semilla y su crecimiento */
+.seed-stage .seed {
+    position: absolute;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 30px;
+    border-radius: 50% 50% 46% 50% / 44% 48% 56% 52%;
+    background: linear-gradient(160deg, #8a5a26, #5a3416);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+.seed-stage .stem {
+    position: absolute;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 0;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #3f7d4c, #2c5a37);
+    transition: height 1.9s var(--bar) 0.5s;
+}
+.seed-stage .leaf {
+    position: absolute;
+    width: 58px;
+    height: 26px;
+    border-radius: 100% 0 100% 0;
+    background: linear-gradient(135deg, #57a05f, #2f6b3e);
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.9s var(--bar);
+}
+.seed-stage .leaf--l {
+    left: 50%;
+    bottom: 32%;
+    transform: translate(-140%, 0) rotate(8deg) scale(0.4);
+    transform-origin: right bottom;
+    border-radius: 0 100% 0 100%;
+}
+.seed-stage .leaf--r {
+    right: 50%;
+    bottom: 24%;
+    transform: translate(140%, 0) rotate(-8deg) scale(0.4);
+    transform-origin: left bottom;
+    border-radius: 100% 0 100% 0;
+}
+.seed-stage .bloom {
+    position: absolute;
+    left: 50%;
+    bottom: 45%;
+    transform: translate(-50%, 40%) scale(0);
+    width: 130px;
+    height: 130px;
+    transition: transform 1s var(--bar) 1.5s, opacity 0.8s ease 1.5s;
+    opacity: 0;
+    transform-origin: center bottom;
+}
+.seed-stage .bloom svg { width: 100%; height: 100%; }
+
+/* estado "crecido" */
+.seed-stage.grown .seed { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.6); }
+.seed-stage.grown .stem { height: var(--stem-h, 52%); }
+.seed-stage.grown .leaf--l { opacity: 1; transform: translate(-104%, -8%) rotate(6deg) scale(1); }
+.seed-stage.grown .leaf--r { opacity: 1; transform: translate(104%, 6%) rotate(-6deg) scale(1); }
+.seed-stage.grown .bloom { opacity: 1; transform: translate(-50%, 0) scale(1); }
+
+/* ---------- 2 · la flor ---------- */
+#screen-flower {
+    background:
+        radial-gradient(130% 90% at 50% 42%, #fff6dd 0%, #ffe9b8 45%, #f3c359 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.flower-halo {
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(74vmin, 560px);
+    height: min(74vmin, 560px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.75) 0%, rgba(255, 217, 122, 0.35) 55%, transparent 75%);
+    pointer-events: none;
+    animation: haloPulse 5s ease-in-out infinite;
+}
+.flower-stage {
+    position: relative;
+    z-index: 2;
+    width: min(40vmin, 240px);
+    height: min(40vmin, 240px);
+    margin-top: calc(max(8px, env(safe-area-inset-top)) + 3vh);
+    animation: sway 5.5s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+.big-flower { width: 100%; height: 100%; }
+.big-flower svg { width: 100%; height: 100%; filter: drop-shadow(0 24px 44px rgba(122, 74, 33, 0.35)); }
+
+.flower-copy { margin-top: 0.6rem; }
+.flower-copy .fx-title { color: var(--green-3); }
+.flower-copy .fx { color: #55421a; }
+
+/* ---------- 3 · el jardín ---------- */
+#screen-garden {
+    background: linear-gradient(180deg, #ffe9b8 0%, #ffd98a 46%, #d9a653 100%);
+}
+.garden-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+.garden-sky {
+    position: absolute;
+    inset: 0 0 42% 0;
+    background: linear-gradient(180deg, #fdf3d3 0%, #ffe9b8 70%, #ffd98a 100%);
+}
+.garden-sun {
+    position: absolute;
+    top: 8%;
+    right: 8%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 35%, #fff8e0, #ffe08a 45%, rgba(255, 224, 138, 0.35) 70%);
+    box-shadow: 0 0 90px 30px rgba(255, 224, 138, 0.75);
+    animation: sunGlow 7s ease-in-out infinite;
+}
+.garden-hills {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 46%;
+    background:
+        radial-gradient(140% 100% at 18% 0%, transparent 58%, #3f7d4c 60%),
+        radial-gradient(140% 110% at 85% 0%, transparent 52%, #2c5a37 55%),
+        linear-gradient(180deg, #c98f4b 0%, #2c5a37 34%, #16301f 100%);
+}
+.garden-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 52%;
+    z-index: 2;
+    will-change: transform;
+}
+.garden-flower {
+    position: absolute;
+    bottom: 0;
+    transform-origin: center bottom;
+    animation: swayVar 6s ease-in-out infinite;
+}
+.garden-flower .stem-dot {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    height: var(--fh);
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #3f7d4c, #2c5a37);
+    border-radius: 3px;
+}
+.garden-flower .hd {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--fh) - var(--s));
+    transform: translateX(-50%);
+    width: var(--s);
+    height: var(--s);
+}
+.garden-flower .hd svg { width: 100%; height: 100%; }
+.garden-flower.dim { opacity: 0.8; }
+.garden-flower.front { filter: drop-shadow(0 6px 14px rgba(46, 33, 8, 0.25)); }
+.garden-flower.back { opacity: 0.55; }
+
+.garden-copy { margin-top: 3rem; }
+.garden-note {
+    position: relative;
+    z-index: 6;
+    text-align: center;
+    padding-bottom: 92px;
+    font-style: italic;
+    color: #55421a;
+    font-size: 0.95rem;
+}
+
+/* ---------- 4 · historia ---------- */
+#screen-story {
+    background:
+        radial-gradient(110% 70% at 50% 0%, rgba(255, 224, 138, 0.45), transparent 60%),
+        linear-gradient(180deg, #fbf3df, #f3e3c0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ---------- 5 · tiempo ---------- */
+#screen-time {
+    background:
+        radial-gradient(120% 80% at 50% 0%, rgba(255, 224, 138, 0.55), transparent 65%),
+        linear-gradient(180deg, #fff3d6 0%, #ffe9b8 48%, #efc878 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#screen-time .fx-title { text-align: center; }
+.time-orbs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(30vmin 30vmin at 12% 18%, rgba(255, 255, 255, 0.55), transparent 70%),
+        radial-gradient(26vmin 26vmin at 88% 26%, rgba(237, 168, 58, 0.4), transparent 70%);
+}
+
+/* ---------- 6 · razones ---------- */
+#screen-razones {
+    background:
+        radial-gradient(120% 80% at 50% 0%, rgba(255, 224, 138, 0.5), transparent 60%),
+        linear-gradient(180deg, #fff6e2 0%, #f7dd94 60%, #eec270 100%);
+}
+
+/* ---------- 7 · canción ---------- */
+#screen-cancion {
+    background:
+        radial-gradient(90% 70% at 50% 26%, rgba(255, 224, 138, 0.4), transparent 65%),
+        linear-gradient(180deg, #ffe9b8 0%, #eeb04f 130%);
+}
+
+/* ---------- 8 · promesas ---------- */
+#screen-promesas {
+    background:
+        radial-gradient(110% 70% at 50% 0%, rgba(255, 224, 138, 0.55), transparent 60%),
+        linear-gradient(180deg, #fdf3d3 0%, #f5dc9a 55%, #ecc878 100%);
+}
+
+/* ---------- 6 · carta ---------- */
+#screen-letter {
+    background: radial-gradient(120% 80% at 50% 30%, rgba(255, 253, 246, 0.85), transparent 60%);
+}
+#screen-letter:not(.letter-open) .letter-bg {
+    background:
+        radial-gradient(90% 70% at 50% 32%, rgba(255, 224, 138, 0.5), transparent 60%),
+        linear-gradient(180deg, #fff6e2, #f3e3c0);
+}
+
+/* ---------- 7 · recuerdos ---------- */
+#screen-remembrance {
+    background:
+        radial-gradient(circle at 50% 38%, #fff3d6 0%, #f7dd94 42%, #2c4a34 135%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#screen-remembrance .screen-title h2 { color: var(--green-3); }
+
+/* ---------- 8 · último pétalo ---------- */
+#screen-last { background: #07090a; }
+
+/* ---------- 9 · final ---------- */
+#screen-finale {
+    background: linear-gradient(180deg, #23352a 0%, #1d3a29 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sunset {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 62%;
+    overflow: hidden;
+    background: linear-gradient(180deg,
+        #1b2a24 0%,
+        #3b4a33 22%,
+        #7a5b38 44%,
+        #c98f4b 58%,
+        #f0b45b 68%,
+        #ffd98a 76%,
+        #fff3d6 86%,
+        #16301f 100%);
+}
+.sun {
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    transform: translateX(-50%);
+    width: min(34vmin, 190px);
+    height: min(34vmin, 190px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 42% 38%, #fff8e0, #ffe08a 52%, #f7b64e 100%);
+    box-shadow: 0 0 120px 40px rgba(255, 217, 122, 0.85);
+    animation: sunGlow 8s ease-in-out infinite;
+}
+.sun-glow {
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    transform: translate(-50%, -50%);
+    width: 130%;
+    height: 130%;
+    background: radial-gradient(circle, rgba(255, 224, 138, 0.28), transparent 62%);
+    pointer-events: none;
+}
+
+.hills {
+    position: absolute;
+    left: -8%;
+    right: -8%;
+    bottom: 0;
+    border-radius: 50% 50% 0 0 / 62% 62% 0 0;
+}
+.hills--back {
+    height: 46%;
+    bottom: -20%;
+    background: radial-gradient(60% 100% at 30% 0%, #4a6b3c, #33512f 60%, #1e3b28);
+}
+.hills--mid {
+    height: 34%;
+    bottom: -24%;
+    background: radial-gradient(64% 100% at 68% 0%, #3f7d4c, #2c5a37 60%, #16301f);
+}
+.hills--near {
+    height: 20%;
+    bottom: -26%;
+    background: radial-gradient(70% 100% at 50% 0%, #2c5a37, #16301f 70%, #0d1f14);
+}
+
+.field {
+    position: absolute;
+    left: -4%;
+    right: -4%;
+    bottom: -10%;
+    height: 24%;
+    background: linear-gradient(180deg, #23503a 0%, #1e3b28 60%, #16301f 100%);
+    border-radius: 60% 60% 0 0 / 70% 70% 0 0;
+}
+
+.field-flowers {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    min-height: 44%;
+    overflow: hidden;
+}
+.final-flower {
+    position: absolute;
+    bottom: -6px;
+    transform-origin: center bottom;
+    animation: swayVar 7s ease-in-out infinite;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+}
+.final-flower.far { opacity: 0.5; }
+.final-flower.near { filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.35)); }
+
+.finale-copy {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 50vh;
+    padding: 2.6rem 1.6rem 110px;
+}
+.finale-copy .fx-title { color: #fff6dd; text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+.finale-copy .fx { color: #fbecc7; }
+.finale-copy .fx-em { color: var(--yellow-1); }
+.finale-copy .sign { color: #ffe08a; }
+
+/* capa general para cada pantalla: apila contenido sobre paisaje */
+#screen-flower, #screen-garden, #screen-story,
+#screen-time, #screen-letter, #screen-remembrance,
+#screen-finale { position: fixed; }
